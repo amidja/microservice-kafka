@@ -4,6 +4,7 @@
 .classpath
 .project
 .settings
+.dbeaver
 bin/
 target/
 pom.xml.tag

@@ -1,0 +1,65 @@
+version: '3'
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper:3.4.6
+    ports:
+      - "2181:2181"
+  kafka:    
+    image: wurstmeister/kafka:2.13-2.6.0
+    ports:
+      - "9094:9094"
+    links:
+     - zookeeper
+    environment:      
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
+      KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT      
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_CREATE_TOPICS: "baeldung:1:1, topic:5:1, filtered:1:1, greeting:1:1"
+  #kafkacat:
+  #  image: confluentinc/cp-kafkacat
+  #  links:
+  #    - zookeeper
+  #    - kafka
+  #apache:
+  #  build: apache
+  #  links:
+  #   - order
+  #   - shipping
+  #   - invoicing
+  #  ports:
+  #   - "8080:80"
+  #postgres:
+  #  build: postgres
+  #  ports:
+  #    - 5432:5432
+  #  volumes:
+  #    - db-data:/var/lib/postgresql/data
+  #  environment:
+  #    POSTGRES_PASSWORD: dbpass
+  #    POSTGRES_USER: dbuser
+#  order:
+#    build: ../microservice-kafka/microservice-kafka-order
+#    links:
+#     - kafka
+#     - postgres
+#    environment:
+#      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+#  shipping:
+#    build: ../microservice-kafka/microservice-kafka-shipping
+#    links:
+#     - kafka
+#     - postgres
+#    environment:
+#      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+#  invoicing:
+#    build: ../microservice-kafka/microservice-kafka-invoicing
+#    links:
+#     - kafka
+#     - postgres
+#    environment:
+#      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+#volumes:
+#  db-data: {}
+  #driver: local

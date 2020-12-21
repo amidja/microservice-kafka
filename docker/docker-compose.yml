@@ -21,6 +21,8 @@ services:
      - "8080:80"
   postgres:
     build: postgres
+    ports:
+      - 5432:5432
     environment:
       POSTGRES_PASSWORD: dbpass
       POSTGRES_USER: dbuser
