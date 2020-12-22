@@ -20,6 +20,7 @@ class OrderController {
 	private OrderService orderService;
 
 	private CustomerRepository customerRepository;
+	
 	private ItemRepository itemRepository;
 
 	@Autowired

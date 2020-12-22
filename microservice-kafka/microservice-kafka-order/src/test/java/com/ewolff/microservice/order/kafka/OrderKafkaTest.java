@@ -60,6 +60,7 @@ public class OrderKafkaTest {
 	@Test
 	public void orderCreatedSendsKafkaMassage() throws Exception {
 		assertThat(kafkaContainer.isRunning(), is(true));
+		
 		for (int i = 0; i < 3; i++) {
 			try {
 				for (MessageListenerContainer messageListenerContainer : kafkaListenerEndpointRegistry
